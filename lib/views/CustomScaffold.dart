@@ -17,12 +17,8 @@ class CustomScaffold extends StatelessWidget {
     return (isiOS) ? iOSScaffold() : androidScaffold();
   }
 
-  Text appTitle() => Text(
+  Text appTitle() => const Text(
         "Light Music",
-        style: GoogleFonts.signika(
-          fontSize: 20,
-          fontWeight: FontWeight.w400,
-        ),
       );
 
   CupertinoPageScaffold iOSScaffold() {
