@@ -49,6 +49,10 @@ class CustomBodyState extends State<CustomBody> {
     );
   }
 
+  onPlayPausePressed() async {
+    final state = audioPlayer.state;
+  }
+
   onRewindPressed() {
     onPreviousSong();
     clearPlayer();
