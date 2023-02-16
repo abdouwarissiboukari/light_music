@@ -13,5 +13,5 @@ class Song {
     required this.urlPath,
   });
 
-  String get thumPath => "/assest/$thumb";
+  String get thumPath => "assets/$thumb";
 }

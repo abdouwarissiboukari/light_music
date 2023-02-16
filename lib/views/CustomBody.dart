@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:light_music/models/MusicData.dart';
 import 'package:light_music/models/Song.dart';
 import 'package:light_music/services/DataProvider.dart';
+import 'package:light_music/views/CustomImageView.dart';
+import 'package:light_music/views/CustomTextView.dart';
+import 'package:light_music/views/PlayerButton.dart';
 import 'package:provider/provider.dart';
 
 class CustomBody extends StatefulWidget {
@@ -21,6 +24,7 @@ class CustomBodyState extends State<CustomBody> {
   void initState() {
     super.initState();
     song = songs.first;
+    setupPlayer();
   }
 
   @override
@@ -42,7 +46,36 @@ class CustomBodyState extends State<CustomBody> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.max,
-            children: [],
+            children: [
+              CustomImageView(imagePath: song.thumPath),
+              CustomTextView(
+                textValue: song.title,
+                factor: 1.8,
+                fontWeight: FontWeight.bold,
+              ),
+              CustomTextView(
+                textValue: song.album,
+                factor: 1.4,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PlayerButton(
+                    onButtonPressed: onRewindPressed,
+                    buttonIcon: Icons.fast_rewind_sharp,
+                  ),
+                  PlayerButton(
+                    onButtonPressed: onPlayPausePressed,
+                    buttonIcon: context.watch<DataProvider>().playPauseIcon,
+                  ),
+                  PlayerButton(
+                    onButtonPressed: onForwardPressed,
+                    buttonIcon: Icons.fast_forward_sharp,
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),
@@ -51,28 +84,43 @@ class CustomBodyState extends State<CustomBody> {
 
   onPlayPausePressed() async {
     final state = audioPlayer.state;
+
+    switch (state) {
+      case PlayerState.completed:
+        break;
+      case PlayerState.stopped:
+        setupPlayer();
+        break;
+      case PlayerState.paused:
+        await audioPlayer.resume();
+        break;
+      case PlayerState.playing:
+        await audioPlayer.pause();
+        break;
+    }
   }
 
   onRewindPressed() {
-    onPreviousSong();
+    song = onPreviousSong();
     clearPlayer();
     setupPlayer();
   }
 
   onForwardPressed() {
-    onNextSong();
     clearPlayer();
+    final newSong = onNextSong();
+    song = newSong;
     setupPlayer();
   }
 
-  onNextSong() {
+  Song onNextSong() {
     final index = songs.indexOf(song);
-    song = songs[(index < songs.length - 1) ? index + 1 : 0];
+    return songs[(index < songs.length - 1) ? index + 1 : 0];
   }
 
-  onPreviousSong() {
+  Song onPreviousSong() {
     final index = songs.indexOf(song);
-    song = songs[(index == 0) ? songs.length - 1 : index - 1];
+    return songs[(index == 0) ? songs.length - 1 : index - 1];
   }
 
   onStateChanged(PlayerState state) {
@@ -90,25 +138,30 @@ class CustomBodyState extends State<CustomBody> {
         case PlayerState.stopped:
           context.read<DataProvider>().getPlayPauseIcon(Icons.play_arrow);
           break;
-        default:
       }
     }
   }
 
   Future<String> songPath() async {
+    String string = "";
     audioCache = AudioCache();
-    final uri = await audioCache!.load(song.urlPath);
+    if (audioCache != null) {
+      final uri = await audioCache!.load(song.urlPath);
+      string = uri.toFilePath();
+    }
 
-    return uri.toFilePath();
+    return string;
   }
 
   setupPlayer() async {
     audioPlayer = AudioPlayer();
+
     audioPlayer.onPlayerStateChanged.listen(onStateChanged);
     audioPlayer.onDurationChanged
         .listen(context.read<DataProvider>().onDurationChanged);
     audioPlayer.onPositionChanged
         .listen(context.read<DataProvider>().onPositionChanged);
+
     await audioPlayer.play(DeviceFileSource(await songPath()));
   }
 
