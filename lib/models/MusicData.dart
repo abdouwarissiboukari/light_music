@@ -13,6 +13,6 @@ class MusicData {
         title: "New York State Of Mind - 2pac Feat Nas Jay-Z",
         album: "Duets",
         thumb: "deux.jpg",
-        urlPath: "New York State Of Mind.mp3"),
+        urlPath: "New_York_State_Of_Mind.mp3"),
   ];
 }

@@ -6,6 +6,7 @@ import 'package:light_music/models/Song.dart';
 import 'package:light_music/services/DataProvider.dart';
 import 'package:light_music/views/CustomImageView.dart';
 import 'package:light_music/views/CustomTextView.dart';
+import 'package:light_music/views/DurationSliderView.dart';
 import 'package:light_music/views/PlayerButton.dart';
 import 'package:provider/provider.dart';
 
@@ -75,12 +76,20 @@ class CustomBodyState extends State<CustomBody> {
                     buttonIcon: Icons.fast_forward_sharp,
                   ),
                 ],
-              )
+              ),
+              DurationSliderView(
+                onPositionChanged: onSliderPositionChanged,
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  onSliderPositionChanged(double changedPosition) {
+    final Duration newPosition = Duration(seconds: changedPosition.toInt());
+    audioPlayer.seek(newPosition);
   }
 
   onPlayPausePressed() async {
@@ -122,7 +131,7 @@ class CustomBodyState extends State<CustomBody> {
 
   Song onPreviousSong() {
     final index = songs.indexOf(song);
-    return songs[(index == 0) ? songs.length - 1 : index - 1];
+    return songs[(index <= 0) ? songs.length - 1 : index - 1];
   }
 
   onStateChanged(PlayerState state) {
@@ -144,17 +153,16 @@ class CustomBodyState extends State<CustomBody> {
     }
   }
 
-  Future<String> songPath() async {
-    // String string = "";
-    // audioCache = AudioCache();
-    // if (audioCache != null) {
-    //   audioCache!.clearAll();
-    //   final uri = await audioCache!.load(song.urlPath);
-    //   string = uri.toFilePath();
-    // }
-
-    return song.urlPath;
-  }
+  // Future<String> songPath() async {
+  // String string = "";
+  // audioCache = AudioCache();
+  // if (audioCache != null) {
+  //   audioCache!.clearAll();
+  //   final uri = await audioCache!.load(song.urlPath);
+  //   string = uri.toFilePath();
+  // }
+  // return song.urlPath;
+  // }
 
   setupPlayer() async {
     audioPlayer = AudioPlayer();

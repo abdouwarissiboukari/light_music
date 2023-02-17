@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:light_music/main.dart';
 import 'package:light_music/services/DataProvider.dart';
 import 'package:light_music/views/CustomBody.dart';
 import 'package:provider/provider.dart';
