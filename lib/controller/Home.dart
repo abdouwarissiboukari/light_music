@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:light_music/services/DataProvider.dart';
 import 'package:light_music/views/CustomScaffold.dart';
 
 class Home extends StatefulWidget {
-  final bool isiOS;
-
-  const Home({super.key, required this.isiOS});
-
   @override
   HomeState createState() => HomeState();
 }
@@ -13,6 +10,6 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return CustomScaffold(isiOS: widget.isiOS);
+    return CustomScaffold();
   }
 }

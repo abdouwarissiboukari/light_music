@@ -4,14 +4,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:light_music/controller/Home.dart';
 import 'package:light_music/main.dart';
+import 'package:light_music/services/DataProvider.dart';
+import 'package:provider/provider.dart';
 
 class CustomMaterialApp extends StatelessWidget {
-  final bool isiOS;
-
-  const CustomMaterialApp({super.key, required this.isiOS});
-
   @override
   Widget build(BuildContext context) {
+    final bool isiOS = context.watch<DataProvider>().osType;
     return (isiOS) ? iOSMaterialApp() : androidMaterialApp();
   }
 
@@ -30,7 +29,7 @@ class CustomMaterialApp extends StatelessWidget {
         Locale('fr', ''),
         Locale('en', ''),
       ],
-      home: Home(isiOS: isiOS),
+      home: Home(),
     );
   }
 
@@ -58,7 +57,7 @@ class CustomMaterialApp extends StatelessWidget {
         Locale('fr', ''),
         Locale('en', ''),
       ],
-      home: Home(isiOS: isiOS),
+      home: Home(),
     );
   }
 }

@@ -2,19 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:light_music/main.dart';
+import 'package:light_music/services/DataProvider.dart';
 import 'package:light_music/views/CustomBody.dart';
+import 'package:provider/provider.dart';
 
 class CustomScaffold extends StatelessWidget {
-  final bool isiOS;
-
-  const CustomScaffold({
-    super.key,
-    required this.isiOS,
-  });
-
   @override
   Widget build(BuildContext context) {
-    return (isiOS) ? iOSScaffold() : androidScaffold();
+    return (context.watch<DataProvider>().osType)
+        ? iOSScaffold()
+        : androidScaffold();
   }
 
   Text appTitle() => const Text(

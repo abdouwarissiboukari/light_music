@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:light_music/models/MusicData.dart';
 import 'package:light_music/models/Song.dart';
 import 'package:light_music/services/DataProvider.dart';
@@ -101,15 +102,16 @@ class CustomBodyState extends State<CustomBody> {
   }
 
   onRewindPressed() {
-    song = onPreviousSong();
+    final newSong = onPreviousSong();
+    song = newSong;
     clearPlayer();
     setupPlayer();
   }
 
   onForwardPressed() {
-    clearPlayer();
     final newSong = onNextSong();
     song = newSong;
+    clearPlayer();
     setupPlayer();
   }
 
@@ -143,14 +145,15 @@ class CustomBodyState extends State<CustomBody> {
   }
 
   Future<String> songPath() async {
-    String string = "";
-    audioCache = AudioCache();
-    if (audioCache != null) {
-      final uri = await audioCache!.load(song.urlPath);
-      string = uri.toFilePath();
-    }
+    // String string = "";
+    // audioCache = AudioCache();
+    // if (audioCache != null) {
+    //   audioCache!.clearAll();
+    //   final uri = await audioCache!.load(song.urlPath);
+    //   string = uri.toFilePath();
+    // }
 
-    return string;
+    return song.urlPath;
   }
 
   setupPlayer() async {
@@ -162,7 +165,7 @@ class CustomBodyState extends State<CustomBody> {
     audioPlayer.onPositionChanged
         .listen(context.read<DataProvider>().onPositionChanged);
 
-    await audioPlayer.play(DeviceFileSource(await songPath()));
+    await audioPlayer.play(AssetSource(song.urlPath));
   }
 
   clearPlayer() {
