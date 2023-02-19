@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:light_music/main.dart';
 import 'package:light_music/services/DataProvider.dart';
@@ -32,10 +33,22 @@ class DurationSliderView extends StatelessWidget {
             ],
           ),
           (context.watch<DataProvider>().osType)
-              ? Container()
+              ? iSlider(context)
               : aSlider(context),
         ],
       ),
+    );
+  }
+
+  CupertinoSlider iSlider(BuildContext context) {
+    final pos = context.watch<DataProvider>().position.inSeconds.toDouble();
+    return CupertinoSlider(
+      min: 0,
+      max: context.watch<DataProvider>().maxDuration.inSeconds.toDouble(),
+      value:
+          pos, // context.watch<DataProvider>().position.inSeconds.toDouble(),
+      onChanged: onPositionChanged,
+      activeColor: appColor,
     );
   }
 

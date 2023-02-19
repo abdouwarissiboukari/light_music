@@ -4,7 +4,7 @@ import 'dart:io';
 class DataProvider with ChangeNotifier {
   late IconData playPauseIcon;
   Duration position = const Duration(seconds: 0);
-  Duration maxDuration = const Duration(seconds: 0);
+  Duration maxDuration = const Duration(seconds: 1);
   late bool osType;
 
   DataProvider() {

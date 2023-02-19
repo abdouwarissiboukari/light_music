@@ -29,7 +29,10 @@ class PlayerButton extends StatelessWidget {
     return CupertinoButton(
       onPressed: onButtonPressed,
       minSize: 50,
-      child: Icon(buttonIcon),
+      child: Icon(
+        buttonIcon,
+        size: 50,
+      ),
     );
   }
 }
