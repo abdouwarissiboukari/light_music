@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:light_music/main.dart';
 import 'package:light_music/models/MusicData.dart';
 import 'package:light_music/models/Song.dart';
 import 'package:light_music/services/DataProvider.dart';
@@ -37,6 +38,7 @@ class CustomBodyState extends State<CustomBody> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Center(
       child: SafeArea(
         child: Container(
@@ -49,14 +51,29 @@ class CustomBodyState extends State<CustomBody> {
             mainAxisSize: MainAxisSize.max,
             children: [
               CustomImageView(imagePath: song.getImagePath),
-              CustomTextView(
-                textValue: song.title,
-                factor: 1.8,
-                fontWeight: FontWeight.bold,
-              ),
-              CustomTextView(
-                textValue: song.artist,
-                factor: 1.4,
+              Card(
+                shadowColor: appColor.withOpacity(0.2),
+                elevation: 1,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 7, right: 7),
+                  height: size.height * 0.16,
+                  width: size.width * 0.88,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomTextView(
+                        textValue: song.title,
+                        factor: 1.5,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      CustomTextView(
+                        textValue: song.artist,
+                        factor: 1.4,
+                      )
+                    ],
+                  ),
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

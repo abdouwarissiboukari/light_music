@@ -5,12 +5,14 @@ class CustomTextView extends StatelessWidget {
   String textValue;
   double factor;
   FontWeight fontWeight;
+  TextAlign textAlign;
 
   CustomTextView({
     super.key,
     required this.textValue,
     this.factor = 1.0,
     this.fontWeight = FontWeight.normal,
+    this.textAlign = TextAlign.center,
   });
 
   @override
@@ -21,6 +23,7 @@ class CustomTextView extends StatelessWidget {
       style: GoogleFonts.signika(
         fontWeight: fontWeight,
       ),
+      textAlign: textAlign,
     );
   }
 }
