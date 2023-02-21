@@ -1,17 +1,16 @@
 class Song {
   int id;
   String title;
-  String album;
-  String thumb;
-  String urlPath;
+  String artist;
+  String imagePath;
+  String urlSong;
 
-  Song({
-    required this.id,
-    required this.title,
-    required this.album,
-    required this.thumb,
-    required this.urlPath,
-  });
+  Song(
+      {required this.id,
+      required this.title,
+      required this.artist,
+      required this.imagePath,
+      required this.urlSong});
 
-  String get thumPath => "assets/$thumb";
+  String get getImagePath => "assets/$imagePath";
 }

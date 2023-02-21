@@ -1,6 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:light_music/models/MusicData.dart';
 import 'package:light_music/models/Song.dart';
 import 'package:light_music/services/DataProvider.dart';
@@ -49,14 +48,14 @@ class CustomBodyState extends State<CustomBody> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             mainAxisSize: MainAxisSize.max,
             children: [
-              CustomImageView(imagePath: song.thumPath),
+              CustomImageView(imagePath: song.getImagePath),
               CustomTextView(
                 textValue: song.title,
                 factor: 1.8,
                 fontWeight: FontWeight.bold,
               ),
               CustomTextView(
-                textValue: song.album,
+                textValue: song.artist,
                 factor: 1.4,
               ),
               Row(
@@ -173,7 +172,7 @@ class CustomBodyState extends State<CustomBody> {
     audioPlayer.onPositionChanged
         .listen(context.read<DataProvider>().onPositionChanged);
 
-    await audioPlayer.play(AssetSource(song.urlPath));
+    await audioPlayer.play(AssetSource(song.urlSong));
   }
 
   clearPlayer() {

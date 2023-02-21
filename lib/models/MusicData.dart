@@ -5,14 +5,14 @@ class MusicData {
     Song(
         id: 1,
         title: "Symphonie numéro 40",
-        album: "Best of",
-        thumb: "un.jpg",
-        urlPath: "allegro.mp3"),
+        artist: "Betoven",
+        imagePath: "un.jpg",
+        urlSong: "allegro.mp3"),
     Song(
         id: 2,
         title: "New York State Of Mind - 2pac Feat Nas Jay-Z",
-        album: "Duets",
-        thumb: "deux.jpg",
-        urlPath: "New_York_State_Of_Mind.mp3"),
+        artist: "2pac, Jay-Z",
+        imagePath: "deux.jpg",
+        urlSong: "New_York_State_Of_Mind.mp3"),
   ];
 }
